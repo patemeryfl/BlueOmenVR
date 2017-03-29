@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Load Page Styles/JQuery Library-->
+    <link rel="stylesheet" href="themes/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" href="themes/BlueOmenNew.css" />
+    <link rel="stylesheet" href="themes/BlueOmenNew.min.css" />
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="themes/jquery.mobile-1.4.5.min.js"></script>
+    <script src="themes/jquery.mobile-1.4.5.js"></script>
+    <!--Load GoogeMap API and Javascript-->
+    <link rel="stylesheet" href="Map/map.css" />
+    <script src="JS/NewMap.js"></script>
+    <!--JS Files for Account Creation-->
+    <script type="text/javascript" src="JS/validation.min.js"></script>
+    <script type="text/javascript" src="JS/script.js"></script>
+    <!--JS Files for Log In-->
+    <script type="text/javascript" src="JS/LogInValidation.min.js"></script>
+    <script type="text/javascript" src="JS/LogInScript.js"></script>
+    <!--JS Files for PhotoGrid-->
+    <script type="text/javascript" src="JS/app.js"></script>
+    <script type="text/javascript" src="JS/mason.js"></script>
+
+
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#backButton').click(function(backButton) {
+          window.history.back();
+        });
+        $('#logOut').click(function(SignInCheck) {
+            SignInCheck.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: 'PHP/logout.php',
+                success: function(data) {
+                  location.href = "index.html#Home";
+                }
+            });
+        });
+        $('#profile').click(function(SignInCheck) {
+            SignInCheck.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: 'SignedInProfile.php',
+                success: function(data) {
+                  location.href = "#SignedInProfile";
+                  $("#ProfileInfo").html(data);
+                },
+                error: function(data) {
+                  location.href = "#SignIn";
+                }
+            });
+        });
+        $('#listings').click(function(mainSearch) {
+            mainSearch.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: 'PHP/listing.php',
+                data: {ListingNo : $('#listings').attr('data')},
+                success: function(data)
+                {
+                    $("#ListingResults").html(data);
+                    location.href = "#Listings";
+                }
+            });
+        });
+        $("#listingContainer").mason({
+        	itemSelector: ".box",
+        	ratio: 1.5,
+        	sizes: [
+        		[1,1],
+        		[1,2],
+        		[2,2]
+        	]
+        });
+        $(".searchToggle").click(function(){
+          $("#search").slideToggle();
+        });
+        $('#submit').click(function(boxSearch) {
+            boxSearch.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: 'PHP/listing.php',
+                data: {ListingNo: $('#ListingNoSearch').val()},
+                success: function(data)
+                {
+                    $("#ListingResults").html(data);
+                    location.href = "#Listings";
+                }
+            });
+        });
+    });
+    </script>
+
+
+  </head>
+<body>
+
+
+<!--BEGIN LANDING PAGE AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="Home">
+      <div data-role="header" data-theme="a" data-position="fixed" data-id="foo">
+            <h1>Blue Omen Realty</h1>
+            <a href="#Home" data-icon="home" data-theme="b" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="search" data-theme="b" data-iconpos="notext" class="searchToggle">Search</a>
+            <div id="search" style="display:none">
+              <div class="ui-grid-a">
+                    <div class="ui-block-a" width="100%">
+                      <input type="search" placeholder="Search for Listings" name="search" id="ListingNoSearch" required>
+                    </div>
+                    <div class="ui-block-b">
+                      <input type="button" id="submit" value="Submit" />
+                    </div>
+              </div>
+            </div>
+      </div>
+        <div data-role="content" data-position="fixed">
+          <div class="ui-corner-all">
+            <h3><center>Lastest Listings</center></h3>
+            <div id='grid'>
+			           <div class='filler'>
+                 <a href="#Listings" data="house" id="listings"><img src="Images/apart1.jpg"></a></div>
+                 <div class='filler'>
+                 <a href="#Listings" data="apartment" id="listings"><img src="Images/apart2.jpg"></a></div>
+                 <div class='filler'>
+                 <a href="#Listings" data="condo" id="listings"><img src="Images/colonial1.jpeg"></a></div>
+                 <div class='filler'>
+                 <a href="#Listings" data="house" id="listings"><img src="Images/condo1.jpg"></a></div>
+                 <div class='filler'>
+                 <a href="#Listings" data="house" id="listings"><img src="Images/modern1.jpg"></a></div>
+                 <div class='filler'>
+                 <a href="#Listings" data="house" id="listings"><img src="Images/modern2.jpg"></a></div>
+            </div><!--End Grid Content-->
+          </div><!--End UI Corner Content-->
+        </div><!--End Main Content-->
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+          <div data-role="navbar">
+          <ul>
+  					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Home</a></li>
+  					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+  					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+  					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left" data-theme="b">Profile</a></li>
+  				</ul>
+          </div>
+        </div>
+</div>
+<!--END LANDING PAGE AREA-->
+
+<!--BEGIN LISTING RESULTS PAGE AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="Listings">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Blue Omen Realty</h1>
+            <a href="#" id="backButton" data-icon="back" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="gear" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+      </div>
+        <div data-role="content">
+          <div class="ui-corner-all">
+
+            <h2><center>Results</center></h2>
+
+            <div id="ListingResults" class="ui-dialog"></div>
+
+          </div>
+        </div><!--End Main Content-->
+        <div data-role="footer" data-id="foo1" data-position="fixed">
+          <div data-role="navbar">
+          <ul>
+  					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Home</a></li>
+  					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+  					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+  					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left" data-theme="b">Profile</a></li>
+  				</ul>
+          </div>
+        </div>
+</div>
+<!--END LISTING RESULTS AREA-->
+
+<!--BEGIN TOUR AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="Tour">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Tour</h1>
+            <a href="#Home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+      </div>
+        <div data-role="content">
+            <p>Tour Video Here</p>
+
+        </div><!--End Main Content-->
+
+
+        <div data-role="footer" data-id="foo1" data-position="fixed">
+          <div data-role="navbar">
+            <ul>
+    					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Home</a></li>
+    					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+    					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+    					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left" data-theme="b">Profile</a></li>
+    				</ul>
+          </div>
+        </div>
+</div>
+<!--END TOUR AREA-->
+
+<!--BEGIN MAP AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="Map">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Local Map</h1>
+            <a href="#mapControls" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+      </div>
+
+        <div data-role="panel" id="mapControls" style="width:350px;" data-position="left" data-display="overlay" data-theme="a">
+          <div data-role="header" style="margin-left:300px;" data-theme="b" data-position="fixed" data-id="foo">
+            <a href="#mapControls" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all"></a>
+          </div>
+          <h1>Search Filters</h1>
+            <div>
+              <input id="zoom-to-area-text" type="text" placeholder="Enter a specific address">
+              <input id="zoom-to-area" type="button" value="Zoom">
+            </div>
+            <div>
+              <span class="text"> Within </span>
+              <select id="max-duration">
+                <option value="10">10 min</option>
+                <option value="15">15 min</option>
+                <option value="30">30 min</option>
+                <option value="60">1 hour</option>
+              </select>
+              <select id="mode">
+                <option value="DRIVING">drive</option>
+                <option value="WALKING">walk</option>
+                <option value="BICYCLING">bike</option>
+                <option value="TRANSIT">transit ride</option>
+              </select>
+              <span class="text">of</span>
+              <input id="search-within-time-text" type="text" placeholder="Ex: Google Office NYC or 75 9th Ave, New York, NY">
+              <input id="search-within-time" type="button" value="Go">
+            </div>
+
+        </div><!--End of Panel/Map Controls-->
+
+        <div data-role="content">
+    			<div class="content-primary">
+            <table id="loadMap">
+            <div id="map"></div>
+            <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyCHyie8GBU-AjNHvgslLNjM3bm8TTlFyk0&v=3&callback=initMap">
+            </script>
+          </table>
+          </div><!--End Primary Content-->
+        </div><!--End Main Content-->
+
+
+      <div data-role="footer" data-id="foo1" data-position="fixed">
+          <div data-role="navbar">
+            <ul>
+    					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left" data-theme="b">Home</a></li>
+    					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Map</a></li>
+    					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+    					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left" data-theme="b">Profile</a></li>
+    				</ul>
+          </div>
+        </div>
+</div>
+<!--END MAP AREA-->
+
+<!--BEGIN REALTOR AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="Realtor">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Find A Realtor</h1>
+            <a href="#Home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+      </div>
+        <div data-role="content">
+    			<div class="content-primary">
+            <div data-role="collapsible-set">
+                <div data-role="collapsible" data-collapsed="false">
+	                 <h3>Trulia</h3>
+	                  <p>This is an idea for how to incorporate realtors</p>
+	              </div>
+                <div data-role="collapsible">
+	                 <h3>Zillow</h3>
+	                  <p>I dont know what to put here<br>
+                    But we can fill it later
+                    </p>
+	             </div>
+           </div>
+         </div><!--End Primary Content-->
+       </div><!--End Main Content-->
+
+
+        <div data-role="footer" data-id="foo1" data-position="fixed">
+          <div data-role="navbar">
+            <ul>
+    					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left" data-theme="b">Home</a></li>
+    					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+    					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Realtor</a></li>
+    					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left" data-theme="b">Profile</a></li>
+    				</ul>
+          </div>
+        </div>
+</div>
+<!--END REALTOR AREA-->
+
+<!--BEGIN SIGN-IN AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="SignIn">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Profile</h1>
+            <a href="#Home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+      </div>
+        <div data-role="content" style ="padding:10px;">
+            <div class="ui-body, ui-body-a and ui-corner-all" style ="padding:10px;">
+
+              <center><h2>Welcome!</h2>
+              <p><b>Existing Users</b></p>
+              <a href="#LogIn" class="ui-btn ui-btn-b ui-corner-all">Sign In</a>
+              <p><b>Don't have an account?</b></p>
+              <a href="#CreateAccount" class="ui-btn ui-btn-b ui-corner-all">Sign Up</a>
+              <p></p></center>
+
+          </div>
+        </div><!--End Main Content-->
+
+
+        <div data-role="footer" data-id="foo1" data-position="fixed">
+          <div data-role="navbar">
+            <ul>
+    					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left" data-theme="b">Home</a></li>
+    					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+    					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+    					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Profile</a></li>
+    				</ul>
+          </div>
+        </div>
+</div>
+<!--END SIGN-IN AREA-->
+
+<!--BEGIN CreateAccount AREA-->
+<div data-role="page" class="type-interior" data-theme="b" id="CreateAccount">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Profile</h1>
+            <a href="#Home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+      </div>
+        <div data-role="content" style ="padding:10px; height:100%;">
+          <div class="ui-body, ui-body-a and ui-corner-all">
+
+
+           <!--New Create Account-->
+
+           <div class="signin-form">
+
+           	<div class="container" style ="padding:10px; height:100%;">
+
+
+                  <form class="form-signin" method="post" id="register-form">
+
+                   <center><h2 class="form-signin-heading">Sign Up</h2><hr /></center>
+
+                   <div id="error">
+                   <!--If there is an error loading a user session, it will be shown here-->
+                   </div>
+
+                   <div class="form-group">
+                   <input type="text" class="form-control" placeholder="First Name" name="uFName" id="uFName" />
+                   </div>
+
+                   <div class="form-group">
+                   <input type="text" class="form-control" placeholder="Last Name" name="uLName" id="uLName" />
+                   </div>
+
+                   <div class="form-group">
+                   <input type="email" class="form-control" placeholder="Email Address" name="uEmail" id="uEmail" />
+                   <span id="check-e"></span>
+                   </div>
+
+                   <div class="form-group">
+                   <input type="password" class="form-control" placeholder="Password" name="HashPass" id="HashPass" />
+                   </div>
+
+                   <div class="form-group">
+                   <input type="password" class="form-control" placeholder="Retype Password" name="cpassword" id="cpassword" />
+                   </div>
+                	<hr />
+
+                   <div class="form-group">
+                       <button type="submit" class="btn btn-default" name="btn-save" id="btn-submit">
+               		<span class="glyphicon glyphicon-log-in"></span> &nbsp; Create Account
+           			</button>
+                   </div>
+
+                 </form>
+
+               </div>
+
+           </div>
+
+           <!--End New Create Account-->
+
+          </div>
+
+            <div data-role="footer" data-id="foo1" data-position="fixed">
+              <div data-role="navbar">
+                <ul>
+        					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left" data-theme="b">Home</a></li>
+        					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+        					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+        					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Profile</a></li>
+        				</ul>
+              </div>
+            </div>
+      </div>
+</div>
+<!--END CreateAccount AREA-->
+
+<!--Log-In Screen-->
+<div data-role="page" class="type-interior" data-theme="b" id="LogIn">
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Profile</h1>
+            <a href="#Home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+      </div>
+        <div data-role="content" style ="padding:10px; height:100%;">
+          <div class="ui-body, ui-body-a and ui-corner-all">
+
+            <!--Start New Account Log-In Area-->
+
+            <div class="signin-form">
+            	<div class="container" style ="padding:10px;">
+                   <form class="form-signin" method="post" id="login-form">
+                    <center><h2 class="form-signin-heading">Log In to Blue Omen Realty</h2><center><hr />
+
+                    <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email address" name="uEmail" id="uEmail" />
+                    <span id="check-e"></span>
+                    </div>
+
+                    <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" name="HashPass" id="HashPass" />
+                    </div>
+
+                 	<hr />
+
+                    <div class="form-group">
+                      <button type="submit" class="ui-btn ui-btn-b ui-corner-all" name="btn-login" id="btn-login">
+                		       &nbsp; Sign In
+            			    </button>
+
+                      <a href="#CreateAccount" class="ui-btn ui-btn-b ui-corner-all">Sign Up</a>
+
+                    </div>
+
+                  </form>
+
+                </div>
+
+            </div>
+
+            <!--End New Account Log-In Area-->
+
+
+          </div>
+        </div><!--End Main Content-->
+
+
+        <div data-role="footer" data-id="foo1" data-position="fixed">
+          <div data-role="navbar">
+            <ul>
+    					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left" data-theme="b">Home</a></li>
+    					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+    					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+    					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Profile</a></li>
+    				</ul>
+          </div>
+        </div>
+</div>
+<!--End Log-In Screen-->
+
+<!--Profile Screen-->
+<div data-role="page" class="type-interior" data-theme="b" id="SignedInProfile">
+
+
+      <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+            <h1>Profile</h1>
+            <a href="#Home" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+            <a href="#" id="logOut">Sign Out</a>
+      </div>
+      <div class="ui-body, ui-body-a and ui-corner-all">
+        <div id="ProfileInfo"></div>
+      </div>
+
+
+      <div data-role="footer" data-id="foo1" data-position="fixed">
+        <div data-role="navbar">
+          <ul>
+  					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left" data-theme="b">Home</a></li>
+  					<li><a href="#Map" data-prefetch="true" class="ui-btn ui-icon-location ui-btn-icon-left" data-theme="b">Map</a></li>
+  					<li><a href="#Realtor" data-prefetch="true" class="ui-btn ui-icon-search ui-btn-icon-left" data-theme="b">Realtor</a></li>
+  					<li><a href="#SignedInProfile" id="profile" data-prefetch="true" class="ui-btn ui-icon-user ui-btn-icon-left ui-btn-active ui-state-persistui-btn-active ui-state-persist" data-theme="b">Profile</a></li>
+  				</ul>
+        </div>
+      </div>
+</div>
+<!--End Profile Screen-->
+
+</body>
+</html>

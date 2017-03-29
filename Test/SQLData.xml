@@ -1,0 +1,23 @@
+<markers>
+<marker id="1" name="Cozy Condo" address="2409 Indigo Dr, Clearwater, FL" lat="28.008128" lng="-82.754700" type="house"/>
+<marker id="2" name="Beach Townhouse" address="207 W North Street, Old Seminole Heights, FL" lat="28.006022" lng="-82.462874" type="condo"/>
+<marker id="3" name="Small Studio" address="315 E Seneca Ave, Tampa, FL" lat="28.045227" lng="-82.455934" type="house"/>
+<marker id="4" name="Medium Ranch House" address="3211 Moran Road, Tampa, FL" lat="28.067858" lng="-82.495609" type="apartment"/>
+<marker id="5" name="Sudent Housing" address="1726 W Ferris Ave, Tampa, FL" lat="27.982060" lng="-82.479458" type="apartment"/>
+<marker id="6" name="Three Oaks Apartments" address="1296 Four Seasons Blvd, Tampa, FL" lat="28.077303" lng="-82.449043" type="house"/>
+<marker id="7" name="Blue Ridge Condos" address="1254 Autumn Drive, Tampa, FL" lat="28.079438" lng="-82.446766" type="house"/>
+<marker id="8" name="Modern Mansion" address="1314 Autumn Drive, Tampa, FL" lat="28.077492" lng="-82.447099" type="house"/>
+<marker id="9" name="Cozy Beach House" address="8437 N River Dune Street, Tampa, FL" lat="28.027950" lng="-82.403023" type="house"/>
+</markers>
+
+
+
+{title: 'Cozy Condo', location: {lat: 28.008128, lng: -82.754700}},
+{title: 'Beach Townhouse', location: {lat: 28.006022, lng: -82.462874}},
+{title: 'Small Studio', location: {lat: 28.045227, lng: -82.455934}},
+{title: 'Medium Ranch House', location: {lat: 28.067858, lng: -82.495609}},
+{title: 'Student Housing', location: {lat: 27.982060, lng: -82.479458}},
+{title: 'Three Oaks Apartments', location: {lat: 28.077303, lng: -82.449043}},
+{title: 'Blue Ridge Condos', location: {lat: 28.079438, lng: -82.446766}},
+{title: 'Modern Mansion', location: {lat: 28.077492, lng: -82.447099}},
+{title: 'Cozy Beach House', location: {lat: 28.027950, lng: -82.403023}}

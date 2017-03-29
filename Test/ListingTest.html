@@ -1,0 +1,62 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--Load Page Styles/JQuery Library-->
+  <link rel="stylesheet" href="themes/jquery.mobile-1.4.5.css" />
+  <link rel="stylesheet" href="themes/BlueOmenNew.css" />
+  <link rel="stylesheet" href="themes/BlueOmenNew.min.css" />
+  <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+  <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+  <script src="themes/jquery.mobile-1.4.5.min.js"></script>
+  <script src="themes/jquery.mobile-1.4.5.js"></script>
+  <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+  <!--Load GoogeMap API and Javascript-->
+  <link rel="stylesheet" href="Map/map.css" />
+  <script src="Map/GoogleMap.js"></script>
+  <!--JS Files for Account Creation-->
+  <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
+  <script type="text/javascript" src="validation.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+  <!--JS Files for Log In-->
+  <script type="text/javascript" src="LogInValidation.min.js"></script>
+  <script type="text/javascript" src="LogInScript.js"></script>
+
+
+      <script type="text/javascript">
+
+      </script>
+</head>
+
+<body>
+  <div data-role="page" class="type-interior" data-theme="b" id="Tour">
+        <div data-role="header" data-theme="b" data-position="fixed" data-id="foo">
+              <h1>Tour</h1>
+              <a href="#Tour" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+              <a href="" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+        </div>
+          <div data-role="content">
+            <h2></h2>
+            <table id="loadListing">
+            </table>
+
+          </div><!--End Main Content-->
+
+
+          <div data-role="footer" data-id="foo1" data-position="fixed">
+            <div data-role="navbar">
+            <ul>
+    					<li><a href="#Home" data-prefetch="true" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-active ui-state-persist" data-theme="b">Home</a></li>
+    					<li><a href="#Map" data-prefetch="true" data-theme="b">Map</a></li>
+    					<li><a href="#Realtor" data-prefetch="true" data-theme="b">Realtor</a></li>
+    					<li><a href="SignedInProfile.php" data-prefetch="true" data-theme="b">Profile</a></li>
+    				</ul>
+            </div>
+          </div>
+  </div>
+</body>
+</html>
